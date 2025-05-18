@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="konoha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Blog - KONOHA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Blog Specific Styles */
+        .blog-hero {
+            height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 10%;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/blog-hero.jpg') center/cover;
+            position: relative;
+            color: var(--light);
+            text-align: center;
+        }
+        
+        .blog-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .blog-hero-title {
+            font-family: var(--font-title);
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+        
+        .blog-hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .blog-container {
+            padding: 5rem 10%;
+            background: var(--light);
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 3rem;
+        }
+        
+        .blog-main {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .blog-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .blog-card-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .blog-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .blog-card:hover .blog-card-image img {
+            transform: scale(1.1);
+        }
+        
+        .blog-card-content {
+            padding: 2rem;
+        }
+        
+        .blog-card-category {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .blog-card-title {
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .blog-card-excerpt {
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            opacity: 0.8;
+        }
+        
+        .blog-card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--dark);
+            opacity: 0.7;
+        }
+        
+        .blog-card-author {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .blog-card-author-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        
+        .blog-card-author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .blog-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .sidebar-widget {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .sidebar-widget-title {
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            position: relative;
+        }
+        
+        .sidebar-widget-title::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+        }
+        
+        .search-form {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+        }
+        
+        .search-button {
+            padding: 0.8rem 1.2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .search-button:hover {
+            background: var(--accent);
+        }
+        
+        .categories-list {
+            list-style: none;
+        }
+        
+        .categories-list li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .categories-list a {
+            display: flex;
+            justify-content: space-between;
+            color: var(--dark);
+            text-decoration: none;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        .categories-list a:hover {
+            color: var(--primary);
+            padding-left: 0.5rem;
+        }
+        
+        .categories-list .count {
+            background: rgba(2, 119, 189, 0.1);
+            color: var(--primary);
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+        
+        .recent-posts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .recent-post {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .recent-post-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .recent-post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .recent-post-content h4 {
+            font-family: var(--font-title);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .recent-post-content a {
+            color: var(--dark);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .recent-post-content a:hover {
+            color: var(--primary);
+        }
+        
+        .recent-post-date {
+            font-size: 0.8rem;
+            color: var(--dark);
+            opacity: 0.7;
+        }
+        
+        .tags-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(2, 119, 189, 0.1);
+            color: var(--primary);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .tag:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+        
+        .pagination-item {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 5px;
+            color: var(--dark);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .pagination-item:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .pagination-item.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        @media (max-width: 992px) {
+            .blog-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .blog-hero-title {
+                font-size: 3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .blog-hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .blog-main {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader - Portail Féérique -->
+    <div class="portal-loader" id="portalLoader">
+        <div class="portal">
+            <div class="portal-content">
+                <div class="portal-logo">KONOHA</div>
+                <div class="portal-tagline">Blog & Actualités</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <a href="index.html" class="logo">
+            <div class="logo-icon">K</div>
+            <div class="logo-text">KONOHA <span class="logo-highlight">MOJO BLACK</span></div>
+        </a>
+        
+        <nav class="nav-desktop">
+            <a href="index.html" class="nav-link">Accueil</a>
+            <div class="nav-dropdown">
+                <a href="#" class="nav-link">Services</a>
+                <div class="nav-dropdown-content">
+                    <a href="pages/boutique-mode.html">Boutique de Mode</a>
+                    <a href="pages/salon-coiffure.html">Salon de Coiffure</a>
+                    <a href="pages/salon-beaute.html">Salon de Beauté</a>
+                    <a href="pages/parfumerie.html">Parfumerie</a>
+                    <a href="pages/atelier-styliste.html">Atelier de Styliste</a>
+                    <a href="pages/restaurant.html">Restaurant-Glacier</a>
+                    <a href="pages/librairie.html">Librairie</a>
+                    <a href="pages/boutique-bienetre.html">Boutique Sex-Shop</a>
+                    <a href="pages/atelier-photo-var.html">Atelier de Photographie</a>
+                    <a href="pages/menuiserie.html">Atelier de Menuiserie</a>
+                </div>
+            </div>
+            <a href="pages/mojo-black.html" class="nav-link">MOJO BLACK</a>
+            <a href="blog.html" class="nav-link active">Blog</a>
+            <a href="index.html#contact" class="nav-link">Contact</a>
+        </nav>
+        
+        <div class="language-selector">
+            <input type="checkbox" id="languageToggle" class="language-toggle">
+            <label for="languageToggle" class="language-current">
+                <img src="images/flag-fr.png" alt="Français">
+                FR
+            </label>
+            <ul class="language-dropdown">
+                <li>
+                    <a href="blog.html" class="active">
+                        <img src="images/flag-fr.png" alt="Français">
+                        Français
+                    </a>
+                </li>
+                <li>
+                    <a href="blog-en.html">
+                        <img src="images/flag-en.png" alt="English">
+                        English
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        
+        <nav class="nav-mobile" id="navMobile">
+            <a href="index.html" class="nav-link">Accueil</a>
+            <a href="#" class="nav-link">Services</a>
+            <div class="mobile-submenu">
+                <a href="pages/boutique-mode.html" class="submenu-link">Boutique de Mode</a>
+                <a href="pages/salon-coiffure.html" class="submenu-link">Salon de Coiffure</a>
+                <a href="pages/salon-beaute.html" class="submenu-link">Salon de Beauté</a>
+                <a href="pages/parfumerie.html" class="submenu-link">Parfumerie</a>
+                <a href="pages/atelier-styliste.html" class="submenu-link">Atelier de Styliste</a>
+                <a href="pages/restaurant.html" class="submenu-link">Restaurant-Glacier</a>
+                <a href="pages/librairie.html" class="submenu-link">Librairie</a>
+                <a href="pages/boutique-bienetre.html" class="submenu-link">Boutique Sex-Shop</a>
+                <a href="pages/atelier-photo-var.html" class="submenu-link">Atelier de Photographie</a>
+                <a href="pages/menuiserie.html" class="submenu-link">Atelier de Menuiserie</a>
+            </div>
+            <a href="pages/mojo-black.html" class="nav-link">MOJO BLACK</a>
+            <a href="blog.html" class="nav-link active">Blog</a>
+            <a href="index.html#contact" class="nav-link">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="blog-hero">
+        <div class="blog-hero-content">
+            <h1 class="blog-hero-title">Blog & Actualités</h1>
+            <p class="blog-hero-subtitle">Découvrez nos derniers articles sur la mode, la beauté, la culture béninoise et bien plus encore.</p>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <div class="blog-container">
+        <div class="blog-main">
+            <!-- Blog Post 1 -->
+            <article class="blog-card">
+                <div class="blog-card-image">
+                    <img src="images/blog-1.jpg" alt="L'évolution de la mode béninoise">
+                </div>
+                <div class="blog-card-content">
+                    <span class="blog-card-category">Mode</span>
+                    <h2 class="blog-card-title">L'évolution de la mode béninoise</h2>
+                    <p class="blog-card-excerpt">Découvrez comment la mode béninoise a évolué au fil des années, mêlant traditions ancestrales et influences contemporaines pour créer un style unique et vibrant.</p>
+                    <div class="blog-card-meta">
+                        <div class="blog-card-author">
+                            <div class="blog-card-author-avatar">
+                                <img src="images/author-1.jpg" alt="Amina K.">
+                            </div>
+                            <span>Amina K.</span>
+                        </div>
+                        <div class="blog-card-date">15 Mai 2025</div>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Blog Post 2 -->
+            <article class="blog-card">
+                <div class="blog-card-image">
+                    <img src="images/blog-2.jpg" alt="Les secrets de beauté ancestraux béninois">
+                </div>
+                <div class="blog-card-content">
+                    <span class="blog-card-category">Beauté</span>
+                    <h2 class="blog-card-title">Les secrets de beauté ancestraux béninois</h2>
+                    <p class="blog-card-excerpt">Plongez dans l'univers des rituels de beauté traditionnels béninois et découvrez comment ces pratiques ancestrales peuvent enrichir votre routine beauté quotidienne.</p>
+                    <div class="blog-card-meta">
+                        <div class="blog-card-author">
+                            <div class="blog-card-author-avatar">
+                                <img src="images/author-2.jpg" alt="Sophie M.">
+                            </div>
+                            <span>Sophie M.</span>
+                        </div>
+                        <div class="blog-card-date">10 Mai 2025</div>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Blog Post 3 -->
+            <article class="blog-card">
+                <div class="blog-card-image">
+                    <img src="images/blog-3.jpg" alt="Les saveurs de la cuisine béninoise">
+                </div>
+                <div class="blog-card-content">
+                    <span class="blog-card-category">Gastronomie</span>
+                    <h2 class="blog-card-title">Les saveurs de la cuisine béninoise</h2>
+                    <p class="blog-card-excerpt">Partez à la découverte des plats emblématiques de la cuisine béninoise, entre épices envoûtantes et techniques de cuisson traditionnelles qui font la richesse de cette gastronomie.</p>
+                    <div class="blog-card-meta">
+                        <div class="blog-card-author">
+                            <div class="blog-card-author-avatar">
+                                <img src="images/author-3.jpg" alt="Pascal N.">
+                            </div>
+                            <span>Pascal N.</span>
+                        </div>
+                        <div class="blog-card-date">5 Mai 2025</div>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Blog Post 4 -->
+            <article class="blog-card">
+                <div class="blog-card-image">
+                    <img src="images/blog-4.jpg" alt="L'artisanat béninois à l'honneur">
+                </div>
+                <div class="blog-card-content">
+                    <span class="blog-card-category">Artisanat</span>
+                    <h2 class="blog-card-title">L'artisanat béninois à l'honneur</h2>
+                    <p class="blog-card-excerpt">Focus sur les savoir-faire artisanaux du Bénin, entre sculptures sur bois, tissage, poterie et bijouterie traditionnelle, des techniques ancestrales qui se réinventent.</p>
+                    <div class="blog-card-meta">
+                        <div class="blog-card-author">
+                            <div class="blog-card-author-avatar">
+                                <img src="images/author-4.jpg" alt="Lionel A.">
+                            </div>
+                            <span>Lionel A.</span>
+                        </div>
+                        <div class="blog-card-date">28 Avril 2025</div>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Blog Post 5 -->
+            <article class="blog-card">
+                <div class="blog-card-image">
+                    <img src="images/blog-5.jpg" alt="Les tendances coiffure de la saison">
+                </div>
+                <div class="blog-card-content">
+                    <span class="blog-card-category">Coiffure</span>
+                    <h2 class="blog-card-title">Les tendances coiffure de la saison</h2>
+                    <p class="blog-card-excerpt">Découvrez les coiffures qui feront sensation cette saison, entre tresses traditionnelles revisitées et coupes modernes inspirées du patrimoine africain.</p>
+                    <div class="blog-card-meta">
+                        <div class="blog-card-author">
+                            <div class="blog-card-author-avatar">
+                                <img src="images/author-5.jpg" alt="Carine D.">
+                            </div>
+                            <span>Carine D.</span>
+                        </div>
+                        <div class="blog-card-date">22 Avril 2025</div>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Blog Post 6 -->
+            <article class="blog-card">
+                <div class="blog-card-image">
+                    <img src="images/blog-6.jpg" alt="Le recyclage créatif des vêtements">
+                </div>
+                <div class="blog-card-content">
+                    <span class="blog-card-category">Mode Durable</span>
+                    <h2 class="blog-card-title">Le recyclage créatif des vêtements</h2>
+                    <p class="blog-card-excerpt">Comment donner une seconde vie à vos vêtements ? Découvrez les astuces de nos stylistes pour transformer vos anciennes pièces en créations uniques et tendance.</p>
+                    <div class="blog-card-meta">
+                        <div class="blog-card-author">
+                            <div class="blog-card-author-avatar">
+                                <img src="images/author-6.jpg" alt="Marc T.">
+                            </div>
+                            <span>Marc T.</span>
+                        </div>
+                        <div class="blog-card-date">15 Avril 2025</div>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Pagination -->
+            <div class="pagination" style="grid-column: 1 / -1;">
+                <a href="#" class="pagination-item active">1</a>
+                <a href="#" class="pagination-item">2</a>
+                <a href="#" class="pagination-item">3</a>
+                <a href="#" class="pagination-item"><i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+        
+        <aside class="blog-sidebar">
+            <!-- Search Widget -->
+            <div class="sidebar-widget">
+                <h3 class="sidebar-widget-title">Recherche</h3>
+                <form class="search-form">
+                    <input type="text" placeholder="Rechercher..." class="search-input">
+                    <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+            
+            <!-- Categories Widget -->
+            <div class="sidebar-widget">
+                <h3 class="sidebar-widget-title">Catégories</h3>
+                <ul class="categories-list">
+                    <li><a href="#">Mode <span class="count">12</span></a></li>
+                    <li><a href="#">Beauté <span class="count">8</span></a></li>
+                    <li><a href="#">Gastronomie <span class="count">6</span></a></li>
+                    <li><a href="#">Artisanat <span class="count">5</span></a></li>
+                    <li><a href="#">Culture <span class="count">7</span></a></li>
+                    <li><a href="#">Événements <span class="count">4</span></a></li>
+                </ul>
+            </div>
+            
+            <!-- Recent Posts Widget -->
+            <div class="sidebar-widget">
+                <h3 class="sidebar-widget-title">Articles Récents</h3>
+                <div class="recent-posts-list">
+                    <div class="recent-post">
+                        <div class="recent-post-image">
+                            <img src="images/blog-1.jpg" alt="L'évolution de la mode béninoise">
+                        </div>
+                        <div class="recent-post-content">
+                            <h4><a href="#">L'évolution de la mode béninoise</a></h4>
+                            <div class="recent-post-date">15 Mai 2025</div>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-post">
+                        <div class="recent-post-image">
+                            <img src="images/blog-2.jpg" alt="Les secrets de beauté ancestraux béninois">
+                        </div>
+                        <div class="recent-post-content">
+                            <h4><a href="#">Les secrets de beauté ancestraux béninois</a></h4>
+                            <div class="recent-post-date">10 Mai 2025</div>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-post">
+                        <div class="recent-post-image">
+                            <img src="images/blog-3.jpg" alt="Les saveurs de la cuisine béninoise">
+                        </div>
+                        <div class="recent-post-content">
+                            <h4><a href="#">Les saveurs de la cuisine béninoise</a></h4>
+                            <div class="recent-post-date">5 Mai 2025</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tags Widget -->
+            <div class="sidebar-widget">
+                <h3 class="sidebar-widget-title">Tags</h3>
+                <div class="tags-cloud">
+                    <a href="#" class="tag">Mode</a>
+                    <a href="#" class="tag">Beauté</a>
+                    <a href="#" class="tag">Cuisine</a>
+                    <a href="#" class="tag">Artisanat</a>
+                    <a href="#" class="tag">Culture</a>
+                    <a href="#" class="tag">Tradition</a>
+                    <a href="#" class="tag">Innovation</a>
+                    <a href="#" class="tag">Bénin</a>
+                    <a href="#" class="tag">Afrique</a>
+                    <a href="#" class="tag">Style</a>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-about">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">K</div>
+                    <div class="logo-text">KONOHA <span class="logo-highlight">MOJO BLACK</span></div>
+                </a>
+                <p class="footer-description">KONOHA est un centre commercial unique au Bénin, regroupant une variété de services et de boutiques dans un cadre chaleureux et accueillant, célébrant la culture béninoise-africaine.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links-container">
+                <h3 class="footer-title">Services</h3>
+                <ul class="footer-links">
+                    <li><a href="pages/boutique-mode.html" class="footer-link">Boutique de Mode</a></li>
+                    <li><a href="pages/salon-coiffure.html" class="footer-link">Salon de Coiffure</a></li>
+                    <li><a href="pages/salon-beaute.html" class="footer-link">Salon de Beauté</a></li>
+                    <li><a href="pages/parfumerie.html" class="footer-link">Parfumerie</a></li>
+                    <li><a href="pages/atelier-styliste.html" class="footer-link">Atelier de Styliste</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links-container">
+                <h3 class="footer-title">Liens Rapides</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html" class="footer-link">Accueil</a></li>
+                    <li><a href="pages/mojo-black.html" class="footer-link">MOJO BLACK</a></li>
+                    <li><a href="blog.html" class="footer-link">Blog</a></li>
+                    <li><a href="pages/a-propos.html" class="footer-link">À Propos</a></li>
+                    <li><a href="pages/mentions-legales.html" class="footer-link">Mentions Légales</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-contact">
+                <h3 class="footer-title">Contact</h3>
+                <div class="footer-contact-item">
+                    <div class="footer-contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="footer-contact-text">
+                        123 Avenue de la République, Cotonou, Bénin
+                    </div>
+                </div>
+                <div class="footer-contact-item">
+                    <div class="footer-contact-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="footer-contact-text">
+                        +229 67 12 34 56
+                    </div>
+                </div>
+                <div class="footer-contact-item">
+                    <div class="footer-contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="footer-contact-text">
+                        contact@konoha.com
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p class="footer-copyright">&copy; <span id="currentYear">2025</span> KONOHA - MOJO BLACK. Tous droits réservés.</p>
+            <div class="footer-legal">
+                <a href="pages/mentions-legales.html">Politique de confidentialité</a>
+                <a href="pages/mentions-legales.html">Conditions d'utilisation</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="konoha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MOJO BLACK - Marque Signature de KONOHA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* MOJO BLACK Specific Styles */
+        .mojo-hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 10%;
+            background: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mojo-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('../images/african-pattern.svg');
+            background-size: 200px;
+            opacity: 0.05;
+        }
+        
+        .mojo-hero-content {
+            max-width: 600px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .mojo-hero-title {
+            font-family: var(--font-title);
+            font-size: 5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+        .mojo-hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--light);
+            opacity: 0.9;
+        }
+        
+        .mojo-hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-outline-gold {
+            background: transparent;
+            color: var(--gold);
+            border: 2px solid var(--gold);
+        }
+        
+        .btn-outline-gold:hover {
+            background: var(--gold);
+            color: var(--dark);
+        }
+        
+        .mojo-manifesto {
+            padding: 8rem 10%;
+            background: var(--light);
+            position: relative;
+        }
+        
+        .mojo-manifesto-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .mojo-manifesto-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .mojo-manifesto-text p {
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .mojo-manifesto-image {
+            position: relative;
+        }
+        
+        .mojo-manifesto-image img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mojo-manifesto-image::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: calc(100% - 40px);
+            height: calc(100% - 40px);
+            border: 2px solid var(--primary);
+            border-radius: 15px;
+            z-index: -1;
+        }
+        
+        .mojo-collections {
+            padding: 8rem 10%;
+            background: var(--dark);
+            color: var(--light);
+            position: relative;
+        }
+        
+        .mojo-collections::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('../images/african-pattern.svg');
+            background-size: 200px;
+            opacity: 0.05;
+        }
+        
+        .mojo-collections .section-title,
+        .mojo-collections .section-subtitle {
+            color: var(--light);
+        }
+        
+        .mojo-collections .section-description {
+            color: var(--light);
+            opacity: 0.8;
+        }
+        
+        .mojo-collections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        
+        .mojo-collection-card {
+            position: relative;
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .mojo-collection-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        .mojo-collection-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .mojo-collection-card:hover .mojo-collection-image {
+            transform: scale(1.1);
+        }
+        
+        .mojo-collection-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+            color: var(--light);
+        }
+        
+        .mojo-collection-title {
+            font-family: var(--font-title);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .mojo-collection-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .mojo-collection-link i {
+            margin-left: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .mojo-collection-link:hover {
+            color: var(--light);
+        }
+        
+        .mojo-collection-link:hover i {
+            transform: translateX(5px);
+        }
+        
+        .mojo-exclusivity {
+            padding: 8rem 10%;
+            background: var(--light);
+            position: relative;
+        }
+        
+        .mojo-exclusivity-slider {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 2rem;
+            margin-top: 4rem;
+        }
+        
+        .mojo-exclusivity-slider::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .mojo-exclusivity-slider::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+        }
+        
+        .mojo-exclusivity-slider::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        
+        .mojo-exclusivity-item {
+            min-width: 300px;
+            scroll-snap-align: start;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .mojo-exclusivity-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mojo-exclusivity-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        
+        .mojo-exclusivity-info {
+            padding: 2rem;
+        }
+        
+        .mojo-exclusivity-name {
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .mojo-exclusivity-price {
+            font-size: 1.2rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .mojo-exclusivity-description {
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            opacity: 0.8;
+        }
+        
+        .mojo-craft {
+            padding: 8rem 10%;
+            background: var(--dark);
+            color: var(--light);
+            position: relative;
+        }
+        
+        .mojo-craft::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('../images/african-pattern.svg');
+            background-size: 200px;
+            opacity: 0.05;
+        }
+        
+        .mojo-craft-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .mojo-craft-image img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        .mojo-craft-content {
+            padding-left: 2rem;
+        }
+        
+        .mojo-craft-title {
+            font-family: var(--font-title);
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--gold);
+        }
+        
+        .mojo-craft-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .mojo-craft-list {
+            list-style: none;
+        }
+        
+        .mojo-craft-list li {
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .mojo-craft-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+        }
+        
+        @media (max-width: 992px) {
+            .mojo-hero-title {
+                font-size: 3.5rem;
+            }
+            
+            .mojo-manifesto-content,
+            .mojo-craft-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .mojo-craft-content {
+                padding-left: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mojo-hero-title {
+                font-size: 3rem;
+            }
+            
+            .mojo-craft-title {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .mojo-hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader - Portail Féérique -->
+    <div class="portal-loader" id="portalLoader">
+        <div class="portal">
+            <div class="portal-content">
+                <div class="portal-logo">MOJO BLACK</div>
+                <div class="portal-tagline">L'élégance béninoise</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Video -->
+    <div class="video-background">
+        <video autoplay muted loop id="bgVideo">
+            <source src="../images/mojo-background.mp4" type="video/mp4">
+        </video>
+        <img src="../images/mojo-background.jpg" alt="MOJO BLACK Background" class="fallback-image">
+    </div>
+    
+    <!-- Header -->
+    <header class="header" id="header">
+        <a href="../index.html" class="logo">
+            <div class="logo-icon">K</div>
+            <div class="logo-text">KONOHA <span class="logo-highlight">MOJO BLACK</span></div>
+        </a>
+        
+        <nav class="nav-desktop">
+            <a href="../index.html" class="nav-link">Accueil</a>
+            <div class="nav-dropdown">
+                <a href="#" class="nav-link">Services</a>
+                <div class="nav-dropdown-content">
+                    <a href="boutique-mode.html">Boutique de Mode</a>
+                    <a href="salon-coiffure.html">Salon de Coiffure</a>
+                    <a href="salon-beaute.html">Salon de Beauté</a>
+                    <a href="parfumerie.html">Parfumerie</a>
+                    <a href="atelier-styliste.html">Atelier de Styliste</a>
+                    <a href="restaurant.html">Restaurant-Glacier</a>
+                    <a href="librairie.html">Librairie</a>
+                    <a href="boutique-bienetre.html">Boutique Sex-Shop</a>
+                    <a href="atelier-photo-var.html">Atelier de Photographie</a>
+                    <a href="menuiserie.html">Atelier de Menuiserie</a>
+                </div>
+            </div>
+            <a href="mojo-black.html" class="nav-link active">MOJO BLACK</a>
+            <a href="../blog.html" class="nav-link">Blog</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </nav>
+        
+        <div class="language-selector">
+            <input type="checkbox" id="languageToggle" class="language-toggle">
+            <label for="languageToggle" class="language-current">
+                <img src="../images/flag-fr.png" alt="Français">
+                FR
+            </label>
+            <ul class="language-dropdown">
+                <li>
+                    <a href="mojo-black.html" class="active">
+                        <img src="../images/flag-fr.png" alt="Français">
+                        Français
+                    </a>
+                </li>
+                <li>
+                    <a href="mojo-black-en.html">
+                        <img src="../images/flag-en.png" alt="English">
+                        English
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        
+        <nav class="nav-mobile" id="navMobile">
+            <a href="../index.html" class="nav-link">Accueil</a>
+            <a href="#" class="nav-link">Services</a>
+            <div class="mobile-submenu">
+                <a href="boutique-mode.html" class="submenu-link">Boutique de Mode</a>
+                <a href="salon-coiffure.html" class="submenu-link">Salon de Coiffure</a>
+                <a href="salon-beaute.html" class="submenu-link">Salon de Beauté</a>
+                <a href="parfumerie.html" class="submenu-link">Parfumerie</a>
+                <a href="atelier-styliste.html" class="submenu-link">Atelier de Styliste</a>
+                <a href="restaurant.html" class="submenu-link">Restaurant-Glacier</a>
+                <a href="librairie.html" class="submenu-link">Librairie</a>
+                <a href="boutique-bienetre.html" class="submenu-link">Boutique Sex-Shop</a>
+                <a href="atelier-photo-var.html" class="submenu-link">Atelier de Photographie</a>
+                <a href="menuiserie.html" class="submenu-link">Atelier de Menuiserie</a>
+            </div>
+            <a href="mojo-black.html" class="nav-link active">MOJO BLACK</a>
+            <a href="../blog.html" class="nav-link">Blog</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="mojo-hero" id="hero">
+        <div class="mojo-hero-content">
+            <h1 class="mojo-hero-title">MOJO BLACK</h1>
+            <p class="mojo-hero-subtitle">L'élégance béninoise réinventée. Une marque signature qui célèbre l'héritage culturel africain à travers des créations contemporaines d'exception.</p>
+            <div class="mojo-hero-buttons">
+                <a href="#collections" class="btn btn-gold">Découvrir nos collections</a>
+                <a href="#manifesto" class="btn btn-outline-gold">Notre manifeste</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Manifesto Section -->
+    <section class="mojo-manifesto" id="manifesto">
+        <div class="section-header">
+            <span class="section-subtitle">Notre Manifeste</span>
+            <h2 class="section-title">L'essence de MOJO BLACK</h2>
+            <p class="section-description">Une vision audacieuse de la mode et du design inspirée par la richesse culturelle du Bénin.</p>
+        </div>
+        
+        <div class="mojo-manifesto-content">
+            <div class="mojo-manifesto-text">
+                <p>MOJO BLACK est née d'une passion pour l'artisanat béninois et d'une vision moderne du luxe africain. Notre marque signature incarne l'élégance, la créativité et l'authenticité à travers des créations qui transcendent les frontières culturelles.</p>
+                
+                <p>Chaque pièce MOJO BLACK raconte une histoire, celle d'un patrimoine riche et vibrant, réinterprété avec une sensibilité contemporaine. Nous puisons notre inspiration dans les motifs traditionnels, les techniques ancestrales et les matériaux nobles du Bénin pour créer des œuvres intemporelles.</p>
+                
+                <p>Notre engagement va au-delà de l'esthétique. MOJO BLACK soutient les artisans locaux, préserve les savoir-faire traditionnels et promeut une mode éthique et durable. Nous croyons en une élégance consciente, qui respecte tant les personnes que la planète.</p>
+                
+                <p>Rejoignez-nous dans cette célébration de la culture béninoise, où tradition et innovation se rencontrent pour créer quelque chose d'extraordinaire.</p>
+            </div>
+            
+            <div class="mojo-manifesto-image">
+                <img src="../images/mojo-manifesto.jpg" alt="L'essence de MOJO BLACK">
+            </div>
+        </div>
+    </section>
+
+    <!-- Collections Section -->
+    <section class="mojo-collections" id="collections">
+        <div class="section-header">
+            <span class="section-subtitle">Nos Collections</span>
+            <h2 class="section-title">Collections de la Maison</h2>
+            <p class="section-description">Découvrez nos lignes de produits qui célèbrent l'élégance et le savoir-faire béninois.</p>
+        </div>
+        
+        <div class="mojo-collections-grid">
+            <!-- Collection 1 -->
+            <div class="mojo-collection-card">
+                <img src="../images/mojo-collection-1.jpg" alt="Collection Vêtements" class="mojo-collection-image">
+                <div class="mojo-collection-overlay">
+                    <h3 class="mojo-collection-title">Vêtements</h3>
+                    <a href="#" class="mojo-collection-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Collection 2 -->
+            <div class="mojo-collection-card">
+                <img src="../images/mojo-collection-2.jpg" alt="Collection Accessoires" class="mojo-collection-image">
+                <div class="mojo-collection-overlay">
+                    <h3 class="mojo-collection-title">Accessoires</h3>
+                    <a href="#" class="mojo-collection-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Collection 3 -->
+            <div class="mojo-collection-card">
+                <img src="../images/mojo-collection-3.jpg" alt="Collection Maison" class="mojo-collection-image">
+                <div class="mojo-collection-overlay">
+                    <h3 class="mojo-collection-title">Maison</h3>
+                    <a href="#" class="mojo-collection-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Exclusivity Section -->
+    <section class="mojo-exclusivity" id="exclusivity">
+        <div class="section-header">
+            <span class="section-subtitle">Exclusivité</span>
+            <h2 class="section-title">Pièces Signature</h2>
+            <p class="section-description">Des créations uniques qui incarnent l'essence de MOJO BLACK.</p>
+        </div>
+        
+        <div class="mojo-exclusivity-slider">
+            <!-- Item 1 -->
+            <div class="mojo-exclusivity-item">
+                <img src="../images/mojo-exclusive-1.jpg" alt="Chemise Adire" class="mojo-exclusivity-image">
+                <div class="mojo-exclusivity-info">
+                    <h3 class="mojo-exclusivity-name">Chemise Adire</h3>
+                    <p class="mojo-exclusivity-price">75.000 FCFA</p>
+                    <p class="mojo-exclusivity-description">Chemise en coton teint à la main selon la technique traditionnelle Adire, réinterprétée avec une coupe contemporaine.</p>
+                    <a href="#" class="btn btn-primary">Découvrir</a>
+                </div>
+            </div>
+            
+            <!-- Item 2 -->
+            <div class="mojo-exclusivity-item">
+                <img src="../images/mojo-exclusive-2.jpg" alt="Sac Kente" class="mojo-exclusivity-image">
+                <div class="mojo-exclusivity-info">
+                    <h3 class="mojo-exclusivity-name">Sac Kente</h3>
+                    <p class="mojo-exclusivity-price">45.000 FCFA</p>
+                    <p class="mojo-exclusivity-description">Sac en tissu Kente tissé à la main, doublé de cuir végétal et orné de détails en laiton.</p>
+                    <a href="#" class="btn btn-primary">Découvrir</a>
+                </div>
+            </div>
+            
+            <!-- Item 3 -->
+            <div class="mojo-exclusivity-item">
+                <img src="../images/mojo-exclusive-3.jpg" alt="Vase Terre Cuite" class="mojo-exclusivity-image">
+                <div class="mojo-exclusivity-info">
+                    <h3 class="mojo-exclusivity-name">Vase Terre Cuite</h3>
+                    <p class="mojo-exclusivity-price">35.000 FCFA</p>
+                    <p class="mojo-exclusivity-description">Vase en terre cuite façonné à la main et décoré de motifs géométriques inspirés des symboles Adinkra.</p>
+                    <a href="#" class="btn btn-primary">Découvrir</a>
+                </div>
+            </div>
+            
+            <!-- Item 4 -->
+            <div class="mojo-exclusivity-item">
+                <img src="../images/mojo-exclusive-4.jpg" alt="Bracelet Bronze" class="mojo-exclusivity-image">
+                <div class="mojo-exclusivity-info">
+                    <h3 class="mojo-exclusivity-name">Bracelet Bronze</h3>
+                    <p class="mojo-exclusivity-price">28.000 FCFA</p>
+                    <p class="mojo-exclusivity-description">Bracelet en bronze coulé selon la technique ancestrale de la cire perdue, inspiré des parures royales du Dahomey.</p>
+                    <a href="#" class="btn btn-primary">Découvrir</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Craft Section -->
+    <section class="mojo-craft" id="craft">
+        <div class="mojo-craft-container">
+            <div class="mojo-craft-image">
+                <img src="../images/mojo-craft.jpg" alt="Notre Savoir-Faire">
+            </div>
+            <div class="mojo-craft-content">
+                <h2 class="mojo-craft-title">Notre Savoir-Faire</h2>
+                <p class="mojo-craft-text">Chez MOJO BLACK, nous perpétuons les techniques artisanales béninoises tout en les réinventant pour le monde contemporain. Chaque création est le fruit d'un travail minutieux et d'une passion pour l'excellence.</p>
+                <ul class="mojo-craft-list">
+                    <li>Matériaux sourcés localement et éthiquement</li>
+                    <li>Collaboration avec des artisans maîtres</li>
+                    <li>Techniques traditionnelles préservées</li>
+                    <li>Finitions impeccables et durables</li>
+                    <li>Design contemporain inspiré du patrimoine béninois</li>
+                </ul>
+                <a href="#" class="btn btn-gold" style="margin-top: 2rem;">En savoir plus</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+        <div class="section-header">
+            <span class="section-subtitle">Contact</span>
+            <h2 class="section-title">Nous contacter</h2>
+            <p class="section-description">Vous souhaitez en savoir plus sur MOJO BLACK ou passer une commande personnalisée ? Contactez-nous.</p>
+        </div>
+        
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-content">
+                        <h3>Boutique</h3>
+                        <p>KONOHA Centre Commercial<br>123 Avenue de la République, Cotonou, Bénin</p>
+                    </div>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="contact-content">
+                        <h3>Téléphone</h3>
+                        <p><a href="tel:+22967123457">+229 67 12 34 57</a></p>
+                    </div>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-content">
+                        <h3>Email</h3>
+                        <p><a href="mailto:mojo@konoha.com">mojo@konoha.com</a></p>
+                    </div>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-content">
+                        <h3>Horaires d'ouverture</h3>
+                        <p>Lundi - Samedi : 10h00 - 19h00<br>Dimanche : Sur rendez-vous</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Nom</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject" class="form-label">Sujet</label>
+                        <input type="text" id="subject" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea id="message" class="form-control" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="form-submit">Envoyer le message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-about">
+                <a href="../index.html" class="logo">
+                    <div class="logo-icon">K</div>
+                    <div class="logo-text">KONOHA <span class="logo-highlight">MOJO BLACK</span></div>
+                </a>
+                <p class="footer-description">MOJO BLACK est la marque signature de KONOHA, incarnant l'élégance et le raffinement à travers des créations qui célèbrent la culture béninoise et le savoir-faire africain.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links-container">
+                <h3 class="footer-title">Collections</h3>
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">Vêtements</a></li>
+                    <li><a href="#" class="footer-link">Accessoires</a></li>
+                    <li><a href="#" class="footer-link">Maison</a></li>
+                    <li><a href="#" class="footer-link">Éditions Limitées</a></li>
+                    <li><a href="#" class="footer-link">Collaborations</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links-container">
+                <h3 class="footer-title">Liens Rapides</h3>
+                <ul class="footer-links">
+                    <li><a href="../index.html" class="footer-link">KONOHA</a></li>
+                    <li><a href="#manifesto" class="footer-link">Notre Manifeste</a></li>
+                    <li><a href="#craft" class="footer-link">Savoir-Faire</a></li>
+                    <li><a href="../blog.html" class="footer-link">Blog</a></li>
+                    <li><a href="../pages/mentions-legales.html" class="footer-link">Mentions Légales</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-contact">
+                <h3 class="footer-title">Contact</h3>
+                <div class="footer-contact-item">
+                    <div class="footer-contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="footer-contact-text">
+                        KONOHA Centre Commercial<br>123 Avenue de la République, Cotonou, Bénin
+                    </div>
+                </div>
+                <div class="footer-contact-item">
+                    <div class="footer-contact-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="footer-contact-text">
+                        +229 67 12 34 57
+                    </div>
+                </div>
+                <div class="footer-contact-item">
+                    <div class="footer-contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="footer-contact-text">
+                        mojo@konoha.com
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p class="footer-copyright">&copy; <span id="currentYear">2025</span> KONOHA - MOJO BLACK. Tous droits réservés.</p>
+            <div class="footer-legal">
+                <a href="../pages/mentions-legales.html">Politique de confidentialité</a>
+                <a href="../pages/mentions-legales.html">Conditions d'utilisation</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/main.js"></script>
+</body>
+</html>

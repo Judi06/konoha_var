@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="konoha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Boutique de Mode - KONOHA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* Page Specific Styles */
+        .service-hero {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 10%;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../images/boutique-mode-hero.jpg') center/cover;
+            position: relative;
+            color: var(--light);
+            text-align: center;
+        }
+        
+        .service-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .service-hero-title {
+            font-family: var(--font-title);
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+        
+        .service-hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .service-categories {
+            padding: 5rem 10%;
+            background: var(--light);
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .category-card {
+            position: relative;
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .category-card:hover .category-image {
+            transform: scale(1.1);
+        }
+        
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+            color: var(--light);
+        }
+        
+        .category-title {
+            font-family: var(--font-title);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .category-description {
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+        
+        .category-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .category-link i {
+            margin-left: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .category-link:hover {
+            color: var(--accent);
+        }
+        
+        .category-link:hover i {
+            transform: translateX(5px);
+        }
+        
+        .featured-products {
+            padding: 5rem 10%;
+            background: var(--dark);
+            color: var(--light);
+            position: relative;
+        }
+        
+        .featured-products::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('../images/african-pattern.svg');
+            background-size: 200px;
+            opacity: 0.05;
+        }
+        
+        .featured-products .section-title,
+        .featured-products .section-subtitle {
+            color: var(--light);
+        }
+        
+        .featured-products .section-description {
+            color: var(--light);
+            opacity: 0.8;
+        }
+        
+        .products-slider {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 2rem;
+            margin-top: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .products-slider::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .products-slider::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        
+        .products-slider::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        
+        .product-card {
+            min-width: 300px;
+            scroll-snap-align: start;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-name {
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+        
+        .product-price {
+            font-size: 1.2rem;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .product-description {
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+        
+        .style-guide {
+            padding: 5rem 10%;
+            background: var(--light);
+        }
+        
+        .guide-content {
+            margin-top: 3rem;
+        }
+        
+        .guide-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .guide-item {
+            text-align: center;
+        }
+        
+        .guide-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .guide-title {
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .guide-description {
+            color: var(--dark);
+            opacity: 0.8;
+        }
+        
+        .service-cta {
+            padding: 5rem 10%;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('../images/boutique-mode-cta.jpg') center/cover;
+            color: var(--light);
+            text-align: center;
+        }
+        
+        .service-cta-title {
+            font-family: var(--font-title);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .service-cta-text {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 992px) {
+            .service-hero-title {
+                font-size: 3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .service-hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .service-hero {
+                height: 50vh;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .service-hero-title {
+                font-size: 2rem;
+            }
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader - Portail Féérique -->
+    <div class="portal-loader" id="portalLoader">
+        <div class="portal">
+            <div class="portal-content">
+                <div class="portal-logo">KONOHA</div>
+                <div class="portal-tagline">Boutique de Mode</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <a href="../index.html" class="logo">
+            <div class="logo-icon">K</div>
+            <div class="logo-text">KONOHA <span class="logo-highlight">MOJO BLACK</span></div>
+        </a>
+        
+        <nav class="nav-desktop">
+            <a href="../index.html" class="nav-link">Accueil</a>
+            <div class="nav-dropdown">
+                <a href="#" class="nav-link active">Services</a>
+                <div class="nav-dropdown-content">
+                    <a href="boutique-mode.html" class="active">Boutique de Mode</a>
+                    <a href="salon-coiffure.html">Salon de Coiffure</a>
+                    <a href="salon-beaute.html">Salon de Beauté</a>
+                    <a href="parfumerie.html">Parfumerie</a>
+                    <a href="atelier-styliste.html">Atelier de Styliste</a>
+                    <a href="restaurant.html">Restaurant-Glacier</a>
+                    <a href="librairie.html">Librairie</a>
+                    <a href="boutique-bienetre.html">Boutique Sex-Shop</a>
+                    <a href="atelier-photo-var.html">Atelier de Photographie</a>
+                    <a href="menuiserie.html">Atelier de Menuiserie</a>
+                </div>
+            </div>
+            <a href="mojo-black.html" class="nav-link">MOJO BLACK</a>
+            <a href="../blog.html" class="nav-link">Blog</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </nav>
+        
+        <div class="language-selector">
+            <input type="checkbox" id="languageToggle" class="language-toggle">
+            <label for="languageToggle" class="language-current">
+                <img src="../images/flag-fr.png" alt="Français">
+                FR
+            </label>
+            <ul class="language-dropdown">
+                <li>
+                    <a href="boutique-mode.html" class="active">
+                        <img src="../images/flag-fr.png" alt="Français">
+                        Français
+                    </a>
+                </li>
+                <li>
+                    <a href="boutique-mode-en.html">
+                        <img src="../images/flag-en.png" alt="English">
+                        English
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        
+        <nav class="nav-mobile" id="navMobile">
+            <a href="../index.html" class="nav-link">Accueil</a>
+            <a href="#" class="nav-link active">Services</a>
+            <div class="mobile-submenu active">
+                <a href="boutique-mode.html" class="submenu-link active">Boutique de Mode</a>
+                <a href="salon-coiffure.html" class="submenu-link">Salon de Coiffure</a>
+                <a href="salon-beaute.html" class="submenu-link">Salon de Beauté</a>
+                <a href="parfumerie.html" class="submenu-link">Parfumerie</a>
+                <a href="atelier-styliste.html" class="submenu-link">Atelier de Styliste</a>
+                <a href="restaurant.html" class="submenu-link">Restaurant-Glacier</a>
+                <a href="librairie.html" class="submenu-link">Librairie</a>
+                <a href="boutique-bienetre.html" class="submenu-link">Boutique Sex-Shop</a>
+                <a href="atelier-photo-var.html" class="submenu-link">Atelier de Photographie</a>
+                <a href="menuiserie.html" class="submenu-link">Atelier de Menuiserie</a>
+            </div>
+            <a href="mojo-black.html" class="nav-link">MOJO BLACK</a>
+            <a href="../blog.html" class="nav-link">Blog</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="service-hero">
+        <div class="service-hero-content">
+            <h1 class="service-hero-title">Boutique de Mode</h1>
+            <p class="service-hero-subtitle">Découvrez les dernières tendances en matière de vêtements, chaussures et accessoires pour hommes, femmes et enfants.</p>
+            <a href="#categories" class="btn btn-primary">Explorer nos collections</a>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="service-categories" id="categories">
+        <div class="section-header">
+            <span class="section-subtitle">Nos Collections</span>
+            <h2 class="section-title">Catégories</h2>
+            <p class="section-description">Explorez nos différentes collections pour hommes, femmes et enfants.</p>
+        </div>
+        
+        <div class="categories-grid">
+            <!-- Category 1 -->
+            <div class="category-card">
+                <img src="../images/collection-hommes.jpg" alt="Collection Hommes" class="category-image">
+                <div class="category-overlay">
+                    <h3 class="category-title">Collection Hommes</h3>
+                    <p class="category-description">Des vêtements élégants et confortables pour tous les styles.</p>
+                    <a href="collection-hommes.html" class="category-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Category 2 -->
+            <div class="category-card">
+                <img src="../images/collection-femmes.jpg" alt="Collection Femmes" class="category-image">
+                <div class="category-overlay">
+                    <h3 class="category-title">Collection Femmes</h3>
+                    <p class="category-description">Des pièces tendance et intemporelles pour toutes les occasions.</p>
+                    <a href="collection-femmes.html" class="category-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Category 3 -->
+            <div class="category-card">
+                <img src="../images/collection-enfants.jpg" alt="Collection Enfants" class="category-image">
+                <div class="category-overlay">
+                    <h3 class="category-title">Collection Enfants</h3>
+                    <p class="category-description">Des vêtements colorés et confortables pour les plus jeunes.</p>
+                    <a href="collection-enfants.html" class="category-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Category 4 -->
+            <div class="category-card">
+                <img src="../images/collection-accessoires.jpg" alt="Accessoires" class="category-image">
+                <div class="category-overlay">
+                    <h3 class="category-title">Accessoires</h3>
+                    <p class="category-description">Des accessoires pour compléter et sublimer vos tenues.</p>
+                    <a href="collection-accessoires.html" class="category-link">Découvrir <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products" id="featured">
+        <div class="section-header">
+            <span class="section-subtitle">Nouveautés</span>
+            <h2 class="section-title">Produits Vedettes</h2>
+            <p class="section-description">Découvrez nos dernières arrivées et nos pièces les plus populaires.</p>
+        </div>
+        
+        <div class="products-slider">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <img src="../images/product-1.jpg" alt="Chemise en lin" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Chemise en lin</h3>
+                    <p class="product-price">25.000 FCFA</p>
+                    <p class="product-description">Chemise en lin naturel, coupe décontractée, parfaite pour les journées chaudes.</p>
+                    <a href="#" class="btn btn-primary">Voir détails</a>
+                </div>
+            </div>
+            
+            <!-- Product 2 -->
+            <div class="product-card">
+                <img src="../images/product-2.jpg" alt="Robe d'été" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Robe d'été</h3>
+                    <p class="product-price">32.000 FCFA</p>
+                    <p class="product-description">Robe légère en coton imprimé, idéale pour les journées ensoleillées.</p>
+                    <a href="#" class="btn btn-primary">Voir détails</a>
+                </div>
+            </div>
+            
+            <!-- Product 3 -->
+            <div class="product-card">
+                <img src="../images/product-3.jpg" alt="Ensemble enfant" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Ensemble enfant</h3>
+                    <p class="product-price">18.000 FCFA</p>
+                    <p class="product-description">Ensemble coloré et confortable pour les enfants de 3 à 6 ans.</p>
+                    <a href="#" class="btn btn-primary">Voir détails</a>
+                </div>
+            </div>
+            
+            <!-- Product 4 -->
+            <div class="product-card">
+                <img src="../images/product-4.jpg" alt="Sac en cuir" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Sac en cuir</h3>
+                    <p class="product-price">45.000 FCFA</p>
+                    <p class="product-description">Sac en cuir véritable, fabriqué à la main par des artisans locaux.</p>
+                    <a href="#" class="btn btn-primary">Voir détails</a>
+                </div>
+            </div>
+            
+            <!-- Product 5 -->
+            <div class="product-card">
+                <img src="../images/product-5.jpg" alt="Veste en jean" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Veste en jean</h3>
+                    <p class="product-price">38.000 FCFA</p>
+                    <p class="product-description">Veste en jean classique, coupe ajustée, lavage vintage.</p>
+                    <a href="#" class="btn btn-primary">Voir détails</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Style Guide -->
+    <section class="style-guide" id="guide">
+        <div class="section-header">
+            <span class="section-subtitle">Conseils Mode</span>
+            <h2 class="section-title">Guide de Style</h2>
+            <p class="section-description">Quelques conseils pour vous aider à créer des tenues élégantes et tendance.</p>
+        </div>
+        
+        <div class="guide-content">
+            <p>Chez KONOHA, nous croyons que la mode est une forme d'expression personnelle. Notre boutique propose une sélection soigneusement choisie de vêtements et d'accessoires qui vous permettent d'exprimer votre style unique tout en restant à la pointe des tendances.</p>
+            
+            <div class="guide-grid">
+                <!-- Guide Item 1 -->
+                <div class="guide-item">
+                    <div class="guide-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3 class="guide-title">Jouez avec les couleurs</h3>
+                    <p class="guide-description">N'hésitez pas à mélanger les couleurs pour créer des tenues dynamiques et expressives. Les tons complémentaires peuvent apporter une touche d'originalité à votre look.</p>
+                </div>
+                
+                <!-- Guide Item 2 -->
+                <div class="guide-item">
+                    <div class="guide-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3 class="guide-title">Maîtrisez l'art de la superposition</h3>
+                    <p class="guide-description">La superposition de vêtements est une technique qui ajoute de la profondeur et de l'intérêt à votre tenue, tout en étant pratique pour s'adapter aux changements de température.</p>
+                </div>
+                
+                <!-- Guide Item 3 -->
+                <div class="guide-item">
+                    <div class="guide-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3 class="guide-title">Accessoirisez avec modération</h3>
+                    <p class="guide-description">Les accessoires peuvent transformer une tenue simple en un look sophistiqué. Choisissez quelques pièces clés qui complètent votre style sans le surcharger.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="service-cta">
+        <h2 class="service-cta-title">Venez découvrir nos collections</h2>
+        <p class="service-cta-text">Notre équipe de conseillers mode se fera un plaisir de vous aider à trouver les pièces qui vous correspondent et à créer des tenues qui vous mettent en valeur.</p>
+        <div class="cta-buttons">
+            <a href="#contact" class="btn btn-primary">Nous contacter</a>
+            <a href="../index.html#services" class="btn btn-outline">Autres services</a>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+        <div class="section-header">
+            <span class="section-subtitle">Contact</span>
+            <h2 class="section-title">Nous contacter</h2>
+            <p class="section-description">Vous avez des questions ou souhaitez en savoir plus sur nos collections ? N'hésitez pas à nous contacter.</p>
+        </div>
+        
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-content">
+                        <h3>Adresse</h3>
+                        <p>KONOHA Centre Commercial<br>123 Avenue de la République, Cotonou, Bénin</p>
+                    </div>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="contact-content">
+                        <h3>Téléphone</h3>
+                        <p><a href="tel:+22967123458">+229 67 12 34 58</a></p>
+                    </div>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-content">
+                        <h3>Email</h3>
+                        <p><a href="mailto:mode@konoha.com">mode@konoha.com</a></p>
+                    </div>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-content">
+                        <h3>Horaires d'ouverture</h3>
+                        <p>Lundi - Samedi : 9h00 - 20h00<br>Dimanche : 10h00 - 18h00</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Nom</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject" class="form-label">Sujet</label>
+                        <input type="text" id="subject" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea id="message" class="form-control" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="form-submit">Envoyer le message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-about">
+                <a href="../index.html" class="logo">
+                    <div class="logo-icon">K</div>
+                    <div class="logo-text">KONOHA <span class="logo-highlight">MOJO BLACK</span></div>
+                </a>
+                <p class="footer-description">KONOHA est un centre commercial unique au Bénin, regroupant une variété de services et de boutiques dans un cadre chaleureux et accueillant, célébrant la culture béninoise-africaine.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links-container">
+                <h3 class="footer-title">Services</h3>
+                <ul class="footer-links">
+                    <li><a href="boutique-mode.html" class="footer-link">Boutique de Mode</a></li>
+                    <li><a href="salon-coiffure.html" class="footer-link">Salon de Coiffure</a></li>
+                    <li><a href="salon-beaute.html" class="footer-link">Salon de Beauté</a></li>
+                    <li><a href="parfumerie.html" class="footer-link">Parfumerie</a></li>
+                    <li><a href="atelier-styliste.html" class="footer-link">Atelier de Styliste</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links-container">
+                <h3 class="footer-title">Liens Rapides</h3>
+                <ul class="footer-links">
+                    <li><a href="../index.html" class="footer-link">Accueil</a></li>
+                    <li><a href="mojo-black.html" class="footer-link">MOJO BLACK</a></li>
+                    <li><a href="../blog.html" class="footer-link">Blog</a></li>
+                    <li><a href="a-propos.html" class="footer-link">À Propos</a></li>
+                    <li><a href="mentions-legales.html" class="footer-link">Mentions Légales</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-contact">
+                <h3 class="footer-title">Contact</h3>
+                <div class="footer-contact-item">
+                    <div class="footer-contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="footer-contact-text">
+                        123 Avenue de la République, Cotonou, Bénin
+                    </div>
+                </div>
+                <div class="footer-contact-item">
+                    <div class="footer-contact-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="footer-contact-text">
+                        +229 67 12 34 56
+                    </div>
+                </div>
+                <div class="footer-contact-item">
+                    <div class="footer-contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="footer-contact-text">
+                        contact@konoha.com
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p class="footer-copyright">&copy; <span id="currentYear">2025</span> KONOHA - MOJO BLACK. Tous droits réservés.</p>
+            <div class="footer-legal">
+                <a href="mentions-legales.html">Politique de confidentialité</a>
+                <a href="mentions-legales.html">Conditions d'utilisation</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/main.js"></script>
+</body>
+</html>
