@@ -1,39 +1,39 @@
 // Navigation et effets de défilement
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function() {
     // Navigation scroll
-    const navbar = document.querySelector('.navbar');
-    window.addEventListener('scroll', function() {
+    const navbar = document.querySelector(".navbar");
+    window.addEventListener("scroll", function() {
         if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
+            navbar.classList.add("scrolled");
         } else {
-            navbar.classList.remove('scrolled');
+            navbar.classList.remove("scrolled");
         }
     });
 
     // Menu mobile
-    const navToggle = document.querySelector('.nav-toggle');
-    const navMenu = document.querySelector('.nav-menu');
+    const navToggle = document.querySelector(".nav-toggle");
+    const navMenu = document.querySelector(".nav-menu");
     
-    if (navToggle && navMenu) {
-        navToggle.addEventListener('click', function() {
-            navToggle.classList.toggle('active');
-            navMenu.classList.toggle('active');
+    if (navToggle && navMenu) { // Vérifier si les éléments existent
+        navToggle.addEventListener("click", function() {
+            navToggle.classList.toggle("active");
+            navMenu.classList.toggle("active");
         });
     }
 
     // Fermer le menu mobile lors du clic sur un lien
-    const navLinks = document.querySelectorAll('.nav-link');
+    const navLinks = document.querySelectorAll(".nav-link");
     navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            if (navToggle && navMenu) {
-                navToggle.classList.remove('active');
-                navMenu.classList.remove('active');
+        link.addEventListener("click", function() {
+            if (navToggle && navMenu && navMenu.classList.contains("active")) { // Vérifier si le menu est ouvert
+                navToggle.classList.remove("active");
+                navMenu.classList.remove("active");
             }
         });
     });
 
     // Animation des éléments au scroll
-    const fadeElements = document.querySelectorAll('.fade-in');
+    const fadeElements = document.querySelectorAll(".fade-in");
     
     function checkFade() {
         fadeElements.forEach(element => {
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const windowHeight = window.innerHeight;
             
             if (elementTop < windowHeight - 100) {
-                element.classList.add('active');
+                element.classList.add("active");
             }
         });
     }
@@ -50,11 +50,11 @@ document.addEventListener('DOMContentLoaded', function() {
     checkFade();
     
     // Vérifier au scroll
-    window.addEventListener('scroll', checkFade);
+    window.addEventListener("scroll", checkFade);
 
     // Carrousel À propos
-    const carouselTrack = document.querySelector('.carousel-track');
-    const carouselSlides = document.querySelectorAll('.carousel-slide');
+    const carouselTrack = document.querySelector(".carousel-track");
+    const carouselSlides = document.querySelectorAll(".carousel-slide");
     
     if (carouselTrack && carouselSlides.length > 0) {
         let currentSlide = 0;
@@ -86,12 +86,12 @@ document.addEventListener('DOMContentLoaded', function() {
         let touchStartX = 0;
         let touchEndX = 0;
         
-        carouselTrack.addEventListener('touchstart', function(e) {
+        carouselTrack.addEventListener("touchstart", function(e) {
             touchStartX = e.changedTouches[0].screenX;
             stopCarousel(); // Arrêter le défilement auto pendant le swipe
         });
         
-        carouselTrack.addEventListener('touchend', function(e) {
+        carouselTrack.addEventListener("touchend", function(e) {
             touchEndX = e.changedTouches[0].screenX;
             handleSwipe();
             startCarousel(); // Redémarrer le défilement auto après le swipe
@@ -110,11 +110,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Slider Avocats
-    const avocatsSlider = document.querySelector('.avocats-slider');
-    const avocatsTrack = document.querySelector('.avocats-slider-track');
-    const avocatCards = document.querySelectorAll('.avocat-card');
-    const prevBtn = document.querySelector('.avocats-prev');
-    const nextBtn = document.querySelector('.avocats-next');
+    const avocatsSlider = document.querySelector(".avocats-slider");
+    const avocatsTrack = document.querySelector(".avocats-slider-track");
+    const avocatCards = document.querySelectorAll(".avocat-card");
+    const prevBtn = document.querySelector(".avocats-prev");
+    const nextBtn = document.querySelector(".avocats-next");
     
     if (avocatsSlider && avocatsTrack && avocatCards.length > 0 && prevBtn && nextBtn) {
         let currentPosition = 0;
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 slidesToShow = 3;
                 cardGap = 30;
             }
-            avocatsTrack.style.gap = cardGap + 'px';
+            avocatsTrack.style.gap = cardGap + "px";
             updateSlider();
         }
         
@@ -155,14 +155,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         updateSlidesToShow();
-        window.addEventListener('resize', updateSlidesToShow);
+        window.addEventListener("resize", updateSlidesToShow);
         
-        prevBtn.addEventListener('click', function() {
+        prevBtn.addEventListener("click", function() {
             currentPosition--;
             updateSlider();
         });
         
-        nextBtn.addEventListener('click', function() {
+        nextBtn.addEventListener("click", function() {
             currentPosition++;
             updateSlider();
         });
@@ -171,11 +171,11 @@ document.addEventListener('DOMContentLoaded', function() {
         let touchStartX = 0;
         let touchEndX = 0;
         
-        avocatsTrack.addEventListener('touchstart', function(e) {
+        avocatsTrack.addEventListener("touchstart", function(e) {
             touchStartX = e.changedTouches[0].screenX;
         });
         
-        avocatsTrack.addEventListener('touchend', function(e) {
+        avocatsTrack.addEventListener("touchend", function(e) {
             touchEndX = e.changedTouches[0].screenX;
             handleSwipeAvocats();
         });
@@ -194,11 +194,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Témoignages Slider
-    const testimonialsContainer = document.querySelector('.testimonials-container');
-    const testimonials = document.querySelectorAll('.testimonial');
-    const dotsContainer = document.querySelector('.dots-container');
-    const testimonialPrev = document.querySelector('.testimonial-prev');
-    const testimonialNext = document.querySelector('.testimonial-next');
+    const testimonialsContainer = document.querySelector(".testimonials-container");
+    const testimonials = document.querySelectorAll(".testimonial");
+    const dotsContainer = document.querySelector(".dots-container");
+    const testimonialPrev = document.querySelector(".testimonial-prev");
+    const testimonialNext = document.querySelector(".testimonial-next");
     
     if (testimonialsContainer && testimonials.length > 0 && dotsContainer && testimonialPrev && testimonialNext) {
         let currentTestimonial = 0;
@@ -207,16 +207,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const sideDots = Math.floor((maxVisibleDots - 1) / 2); // Nombre de points de chaque côté de l'actif
 
         // Vider les points existants
-        dotsContainer.innerHTML = ''; 
+        dotsContainer.innerHTML = ""; 
 
         // Créer les points dynamiquement
         for (let i = 0; i < totalDots; i++) {
-            const dot = document.createElement('span');
-            dot.classList.add('dot');
+            const dot = document.createElement("span");
+            dot.classList.add("dot");
             dot.dataset.index = i;
             dotsContainer.appendChild(dot);
         }
-        const dots = dotsContainer.querySelectorAll('.dot');
+        const dots = dotsContainer.querySelectorAll(".dot");
 
         function showTestimonial(index) {
             // Déplacer le conteneur de témoignages
@@ -229,16 +229,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function updateDotsVisibility(activeIndex) {
             dots.forEach((dot, index) => {
-                dot.classList.remove('active');
-                dot.style.display = 'none'; // Cacher tous les points par défaut
+                dot.classList.remove("active");
+                dot.style.display = "none"; // Cacher tous les points par défaut
             });
 
             if (totalDots <= maxVisibleDots) {
                 // Si moins de points que le max, afficher tous les points
                 dots.forEach((dot, index) => {
-                    dot.style.display = 'inline-block';
+                    dot.style.display = "inline-block";
                     if (index === activeIndex) {
-                        dot.classList.add('active');
+                        dot.classList.add("active");
                     }
                 });
             } else {
@@ -255,26 +255,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Afficher les points dans la plage calculée
                 for (let i = start; i <= end; i++) {
-                    dots[i].style.display = 'inline-block';
+                    dots[i].style.display = "inline-block";
                     if (i === activeIndex) {
-                        dots[i].classList.add('active');
+                        dots[i].classList.add("active");
                     }
                 }
             }
         }
         
-        testimonialPrev.addEventListener('click', function() {
+        testimonialPrev.addEventListener("click", function() {
             currentTestimonial = (currentTestimonial - 1 + totalDots) % totalDots;
             showTestimonial(currentTestimonial);
         });
         
-        testimonialNext.addEventListener('click', function() {
+        testimonialNext.addEventListener("click", function() {
             currentTestimonial = (currentTestimonial + 1) % totalDots;
             showTestimonial(currentTestimonial);
         });
         
         dots.forEach(dot => {
-            dot.addEventListener('click', function() {
+            dot.addEventListener("click", function() {
                 showTestimonial(parseInt(this.dataset.index));
             });
         });
@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Compteurs statistiques
-    const statNumbers = document.querySelectorAll('.stat-number');
+    const statNumbers = document.querySelectorAll(".stat-number");
     let countersAnimated = false;
     
     function animateCounter(element, target) {
@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function checkCounters() {
-        const statsSection = document.getElementById('statistiques');
+        const statsSection = document.getElementById("statistiques");
         if (!statsSection) return;
 
         const sectionTop = statsSection.getBoundingClientRect().top;
@@ -313,83 +313,83 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (sectionTop < windowHeight - 100 && !countersAnimated) {
              statNumbers.forEach(stat => {
-                if (!stat.classList.contains('counted')) {
-                    const target = parseInt(stat.getAttribute('data-count'));
+                if (!stat.classList.contains("counted")) {
+                    const target = parseInt(stat.getAttribute("data-count"));
                     animateCounter(stat, target);
-                    stat.classList.add('counted');
+                    stat.classList.add("counted");
                 }
             });
             countersAnimated = true; // Marquer comme animé pour ne pas relancer
         }
     }
     
-    window.addEventListener('scroll', checkCounters);
+    window.addEventListener("scroll", checkCounters);
     checkCounters(); // Vérifier au chargement initial
 
     // Modals
-    const avisBtn = document.getElementById('avis-btn');
-    const contactBtn = document.getElementById('contact-btn');
-    const avisModal = document.getElementById('avis-modal');
-    const contactModal = document.getElementById('contact-modal');
-    const modalCloses = document.querySelectorAll('.modal-close');
+    const avisBtn = document.getElementById("avis-btn");
+    const contactBtn = document.getElementById("contact-btn");
+    const avisModal = document.getElementById("avis-modal");
+    const contactModal = document.getElementById("contact-modal");
+    const modalCloses = document.querySelectorAll(".modal-close");
     
     function openModal(modal) {
         if(modal) {
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            modal.classList.add("active");
+            document.body.style.overflow = "hidden";
         }
     }
     
     function closeModal(modal) {
         if(modal) {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
+            modal.classList.remove("active");
+            document.body.style.overflow = "";
         }
     }
     
     if (avisBtn && avisModal) {
-        avisBtn.addEventListener('click', function() {
+        avisBtn.addEventListener("click", function() {
             openModal(avisModal);
         });
     }
     
     if (contactBtn && contactModal) {
-        contactBtn.addEventListener('click', function() {
+        contactBtn.addEventListener("click", function() {
             openModal(contactModal);
         });
     }
     
     modalCloses.forEach(close => {
-        close.addEventListener('click', function() {
-            const modal = close.closest('.modal');
+        close.addEventListener("click", function() {
+            const modal = close.closest(".modal");
             closeModal(modal);
         });
     });
     
-    window.addEventListener('click', function(e) {
-        if (e.target.classList.contains('modal')) {
+    window.addEventListener("click", function(e) {
+        if (e.target.classList.contains("modal")) {
             closeModal(e.target);
         }
     });
 
     // Rating system
-    const stars = document.querySelectorAll('.rating-select i');
-    const ratingInput = document.getElementById('avis-rating');
+    const stars = document.querySelectorAll(".rating-select i");
+    const ratingInput = document.getElementById("avis-rating");
     
     if (stars.length > 0 && ratingInput) {
         stars.forEach(star => {
-            star.addEventListener('mouseover', function() {
-                const rating = this.getAttribute('data-rating');
+            star.addEventListener("mouseover", function() {
+                const rating = this.getAttribute("data-rating");
                 highlightStars(rating);
             });
             
-            star.addEventListener('mouseout', function() {
+            star.addEventListener("mouseout", function() {
                 const currentRating = ratingInput.value;
                 highlightStars(currentRating);
             });
             
-            star.addEventListener('click', function() {
-                const rating = this.getAttribute('data-rating');
+            star.addEventListener("click", function() {
+                const rating = this.getAttribute("data-rating");
                 ratingInput.value = rating;
                 highlightStars(rating);
             });
@@ -397,13 +397,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         function highlightStars(rating) {
             stars.forEach(star => {
-                const starRating = star.getAttribute('data-rating');
+                const starRating = star.getAttribute("data-rating");
                 if (starRating <= rating) {
-                    star.classList.remove('far');
-                    star.classList.add('fas');
+                    star.classList.remove("far");
+                    star.classList.add("fas");
                 } else {
-                    star.classList.remove('fas');
-                    star.classList.add('far');
+                    star.classList.remove("fas");
+                    star.classList.add("far");
                 }
             });
         }
@@ -413,74 +413,85 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Form submission AJAX pour FormSubmit
-    const forms = document.querySelectorAll('form[action^="https://formsubmit.co/"]');
-    const notification = document.getElementById('notification');
-    const notificationMessage = document.getElementById('notification-message');
+    // Form submission AJAX pour FormSubmit (CORRIGÉ)
+    const forms = document.querySelectorAll('form[action^="https://formsubmit.co/"]'); // Cibler uniquement les formulaires FormSubmit
+    const notification = document.getElementById("notification");
+    const notificationMessage = document.getElementById("notification-message");
 
     forms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
+        form.addEventListener("submit", function(e) {
+            e.preventDefault(); // Empêcher la soumission HTML classique
             
             const formData = new FormData(form);
-            const formAction = form.getAttribute('action');
+            const formAction = form.getAttribute("action");
             const submitButton = form.querySelector('button[type="submit"]');
-            const originalButtonText = submitButton ? submitButton.textContent : 'Envoyer'; // Ou un texte par défaut approprié
+            const originalButtonText = submitButton ? submitButton.textContent : "Envoyer"; // Ou un texte par défaut
 
             // Désactiver le bouton et afficher un message de chargement
             if (submitButton) {
                 submitButton.disabled = true;
-                // Utiliser une icône de chargement ou un texte approprié
-                const loadingText = submitButton.dataset.loadingText || 'Envoi en cours...'; 
+                // Utiliser data-attribute pour les textes traduits si nécessaire
+                const loadingText = submitButton.dataset.loadingText || "Envoi en cours..."; 
                 submitButton.textContent = loadingText;
             }
 
             fetch(formAction, {
-                method: 'POST',
+                method: "POST",
                 body: formData,
                 headers: {
-                    'Accept': 'application/json'
+                    'Accept': 'application/json' // Important pour que FormSubmit réponde en JSON et n'effectue pas de redirection
                 }
             })
             .then(response => {
-                // FormSubmit peut renvoyer 200 OK même en cas d'erreur de configuration (ex: email non confirmé)
-                // Il est plus fiable de vérifier le contenu de la réponse si possible
+                // Vérifier si la réponse HTTP est OK (status 200-299)
                 if (!response.ok) {
-                    // Tenter de lire le corps de l'erreur si possible
-                    return response.json().catch(() => ({ success: false, message: `HTTP error! status: ${response.status}` })).then(errData => {
-                        throw new Error(errData.message || `HTTP error! status: ${response.status}`);
+                    // Essayer de lire le corps de l'erreur JSON si possible
+                    return response.json().catch(() => {
+                        // Si le corps n'est pas JSON ou vide, créer une erreur générique
+                        return { success: false, message: `Erreur HTTP ${response.status}` };
+                    }).then(errData => {
+                        // Lancer une erreur avec le message de FormSubmit ou le statut HTTP
+                        throw new Error(errData.message || `Erreur HTTP ${response.status}`);
                     });
                 }
+                // Si la réponse est OK, la traiter comme JSON
                 return response.json();
             })
             .then(data => {
                 // FormSubmit renvoie {success: "true"} en cas de succès
                 if (data.success === "true" || (typeof data.success === 'boolean' && data.success)) { 
-                    form.reset();
+                    form.reset(); // Réinitialiser les champs du formulaire
+                    
                     // Réinitialiser les étoiles si c'est le formulaire d'avis
-                    if (form.id === 'avis-form' && ratingInput) {
-                        ratingInput.value = '';
+                    if (form.id === "avis-form" && ratingInput) {
+                        ratingInput.value = "";
                         highlightStars(0);
                     }
-                    const modal = form.closest('.modal');
-                    closeModal(modal);
-                    // Utiliser des messages traduisibles si nécessaire
-                    const successMessage = form.dataset.successMessage || 'Message envoyé avec succès !';
-                    showNotification(successMessage, 'success');
+
+                    const modal = form.closest(".modal");
+                    if (modal) {
+                        closeModal(modal); // Fermer le modal
+                    }
+
+                    // Afficher la notification de succès
+                    const successMessage = form.dataset.successMessage || "Message envoyé avec succès !";
+                    showNotification(successMessage, "success");
                 } else {
-                    // Gérer les erreurs renvoyées par FormSubmit (ex: email non confirmé)
-                    console.error('Erreur FormSubmit:', data);
-                    const errorMessage = form.dataset.errorMessage || 'Erreur lors de l\'envoi du message.';
-                    showNotification(data.message || errorMessage, 'error');
+                    // Gérer les erreurs spécifiques renvoyées par FormSubmit dans le JSON (ex: email non confirmé)
+                    console.error("Erreur FormSubmit:", data);
+                    const errorMessage = form.dataset.errorMessage || "Erreur lors de l'envoi du message.";
+                    showNotification(data.message || errorMessage, "error");
                 }
             })
             .catch(error => {
-                console.error('Erreur Fetch:', error);
-                const networkErrorMessage = form.dataset.networkErrorMessage || 'Erreur réseau lors de l\'envoi.';
-                showNotification(networkErrorMessage, 'error');
+                // Gérer les erreurs réseau ou les erreurs lancées précédemment
+                console.error("Erreur Fetch ou Traitement:", error);
+                const networkErrorMessage = form.dataset.networkErrorMessage || "Erreur réseau ou serveur lors de l'envoi.";
+                // Afficher le message d'erreur de l'objet Error s'il existe, sinon le message par défaut
+                showNotification(error.message || networkErrorMessage, "error");
             })
             .finally(() => {
-                 // Réactiver le bouton et restaurer le texte original
+                 // Réactiver le bouton et restaurer le texte original, que ce soit un succès ou une erreur
                  if (submitButton) {
                     submitButton.disabled = false;
                     submitButton.textContent = originalButtonText;
@@ -489,15 +500,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Fonction pour afficher les notifications pop-up
     function showNotification(message, type) {
         if (notification && notificationMessage) {
             notificationMessage.textContent = message;
-            notification.className = 'notification'; // Reset classes
-            notification.classList.add('active', type); // Ajouter active et le type (success/error)
+            notification.className = "notification"; // Réinitialiser les classes
+            notification.classList.add("active", type); // Ajouter active et le type (success/error)
             
             // Masquer la notification après 4 secondes
             setTimeout(function() {
-                notification.classList.remove('active');
+                notification.classList.remove("active");
             }, 4000);
         }
     }
