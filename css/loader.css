@@ -1,0 +1,132 @@
+/* Loader Styles */
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.95); /* Fond blanc légèrement transparent */
+    z-index: 9999;
+    flex-direction: column;
+    text-align: center;
+    color: #0a2e5c; /* Couleur principale bleu foncé */
+    font-family: 'Montserrat', sans-serif;
+}
+
+.balance-loader {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.balance-beam {
+    width: 100%;
+    height: 6px;
+    background-color: #0a2e5c;
+    position: absolute;
+    top: 30px;
+    left: 0;
+    border-radius: 3px;
+    transform-origin: center center;
+    animation: balance-tilt 2s ease-in-out infinite;
+}
+
+.balance-stand {
+    width: 6px;
+    height: 70px;
+    background-color: #0a2e5c;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 3px 3px 0 0;
+}
+
+.balance-base {
+    width: 40px;
+    height: 10px;
+    background-color: #0a2e5c;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 5px 5px 0 0;
+}
+
+.balance-pan {
+    width: 30px;
+    height: 20px;
+    border: 3px solid #0a2e5c;
+    border-top: none;
+    border-radius: 0 0 15px 15px;
+    position: absolute;
+    bottom: 35px; /* Ajusté pour être sous le beam */
+    background-color: #ffffff;
+}
+
+.balance-pan.left {
+    left: 5px;
+    animation: pan-left-move 2s ease-in-out infinite;
+}
+
+.balance-pan.right {
+    right: 5px;
+    animation: pan-right-move 2s ease-in-out infinite;
+}
+
+.balance-pan::before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 25px; /* Longueur des fils */
+    background-color: #0a2e5c;
+    top: -25px; /* Position au-dessus du pan */
+}
+
+.balance-pan.left::before {
+    left: 14px; /* Centré sur le pan */
+    transform-origin: top center;
+    animation: string-left-tilt 2s ease-in-out infinite;
+}
+
+.balance-pan.right::before {
+    right: 14px; /* Centré sur le pan */
+    transform-origin: top center;
+    animation: string-right-tilt 2s ease-in-out infinite;
+}
+
+@keyframes balance-tilt {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(10deg); }
+}
+
+@keyframes pan-left-move {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+}
+
+@keyframes pan-right-move {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes string-left-tilt {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(5deg); }
+}
+
+@keyframes string-right-tilt {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(5deg); }
+}
+
+.loader-text {
+    margin-top: 15px;
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
