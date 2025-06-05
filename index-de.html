@@ -9,8 +9,83 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Spectral:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Loader Container */
+        #loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000; /* **NOIR UNI pour une visibilité maximale** */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 99999; /* Z-index très élevé pour être au-dessus de tout */
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.7s ease-out, visibility 0.7s ease-out;
+        }
+
+        #loader-wrapper.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Gavel Icon */
+        .gavel-icon {
+            font-size: 5rem; /* Taille de l'icône */
+            color: #e74c3c; /* **ROUGE vif pour l'icône** */
+            animation: gavelRotate 2s infinite ease-in-out; /* Animation de rotation */
+            position: relative;
+        }
+
+        /* Animation de rotation du marteau */
+        @keyframes gavelRotate {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(-15deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(15deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        /* Loading Bar */
+        .loading-bar-container {
+            width: 200px;
+            height: 8px;
+            background-color: #333333; /* Fond de barre plus sombre pour le contraste */
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 30px;
+        }
+
+        .loading-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #2ecc71; /* Couleur de succès pour la barre de progression */
+            border-radius: 4px;
+            animation: loadingProgress 3s infinite linear;
+        }
+
+        /* Animation de la barre de progression */
+        @keyframes loadingProgress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+    </style>
 </head>
 <body>
+    <div id="loader-wrapper">
+        <div class="gavel-icon">
+            <i class="fas fa-gavel"></i>
+        </div>
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
+        </div>
+        <p style="margin-top: 20px; color: #ffffff; font-size: 1.1em;">Chargement en cours...</p>
+    </div>
+
     <!-- Navigation -->
     <header>
         <nav class="navbar">
@@ -698,5 +773,21 @@
     </div>
 
     <script src="js/script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const loaderWrapper = document.getElementById("loader-wrapper");
+            const mainContent = document.body; // Cible le body
+
+            // Temporisation pour s'assurer que les CSS sont appliquées et pour l'effet de "chargement"
+            setTimeout(() => {
+                loaderWrapper.classList.add("hidden"); // Ajoute la classe pour cacher le loader (via CSS transition)
+                loaderWrapper.addEventListener('transitionend', () => {
+                    loaderWrapper.style.display = 'none'; // Cache complètement le loader après la transition
+                    // N'ajoutez rien ici pour rendre le body visible, il l'est par défaut.
+                    // mainContent.style.overflow = ''; // Si vous avez mis overflow: hidden sur le body au début.
+                }, { once: true }); // L'écouteur ne se déclenche qu'une seule fois
+            }, 3000); // **Gardera le loader visible pendant 3 secondes pour une meilleure observation**
+        });
+    </script>
 </body>
 </html>
